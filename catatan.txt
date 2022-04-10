@@ -7,3 +7,46 @@ setiap model data di bawah setiap class ditambahkan
 }
 
 merubah logo flutter pakai  flutter_launcher_icons
+
+belajar map
+void HitungOngkir() async {
+    Uri url = Uri.parse("https://api.rajaongkir.com/starter/cost");
+    try {
+      final Response = await http.post(
+        url,
+        body: {
+          "origin": cityAwalid.value,
+          "destination": cityTujuanid.value,
+          "weight": berat.value.toString(),
+          "courier": kurir.value
+          // "origin": "501",
+          // "destination": "114",
+          // "weight": "1700",
+          // "courier": "jne"
+        },
+        headers: {
+          "key": "428084606cd44a1724aaf7b2c83de401",
+          "content-type": "application/x-www-form-urlencoded",
+        },
+      );
+      print((Response != null) ? "ada data" : "tidak ada data");
+      var hasil = json.decode(Response.body) as Map<String, dynamic>;
+
+      var results = hasil['rajaongkir']['results'] as List<dynamic>;
+
+      var listAllHasilKurir = HasilOngkir.fromJsonList(results);
+      var courier = listAllHasilKurir[0];
+
+      Get.defaultDialog(
+          content: Column(
+              children: courier.costs
+                  .map((e) => ListTile(
+                        title: Text("${e.service}"),
+                        subtitle: Text(" Rp. ${e.cost[0].value}"),
+                        trailing: Text("${e.cost[0].etd} hari"),
+                      ))
+                  .toList()));
+    } catch (err) {
+      print("error bro");
+    }
+  }

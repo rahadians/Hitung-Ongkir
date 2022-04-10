@@ -37,13 +37,20 @@ class Kurir extends GetView<HomeController> {
       itemAsString: (item) => item!['name'], //ini agar saat search terbaca,
 
       onChanged: (value) {
+        // if (value != null) {
+        //   controller.kurir.value = value["code"];
+        //   controller.showButton();
+        // } else {
+        //   controller.hiddenButton.value = true;
+        //   controller.kurir.value = "";
+        // }
+
         if (value != null) {
           controller.kurir.value = value["code"];
-          controller.showButton();
         } else {
-          controller.hiddenButton.value = true;
           controller.kurir.value = "";
         }
+        ;
       },
     );
   }

@@ -1,1 +1,9 @@
 catatan
+
+setiap model data di bawah setiap class ditambahkan
+  static List<HasilOngkir> fromJsonList(List list) {
+    if (list == null) return List<HasilOngkir>.empty();
+    return list.map((item) => HasilOngkir.fromJson(item)).toList();}
+}
+
+merubah logo flutter pakai  flutter_launcher_icons

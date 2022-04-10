@@ -17,12 +17,17 @@ class Konfirmasi extends GetView<HomeController> {
 // Map<String, dynamic>
   @override
   Widget build(BuildContext context) {
-    if ((controller.hiddenButton.value)) {
-      return SizedBox(
-        height: 10,
-      );
-    } else {
-      return ElevatedButton(onPressed: () {}, child: Text("Confirm"));
-    }
+    return ElevatedButton(
+        onPressed: () => controller.HitungOngkir(),
+        child: Text("Hitung Ongkir"));
   }
+  //   if ((controller.hiddenButton.value)) {
+  //     return SizedBox(
+  //       height: 10,
+  //     );
+  //   } else {
+  //     return ElevatedButton(
+  //         onPressed: () => controller.HitungOngkir(), child: Text("Confirm"));
+  //   }
+  // }
 }

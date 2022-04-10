@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hitungongkir/app/data/datakurir.dart';
+import 'package:hitungongkir/app/modules/home/models/hasil_ongkir.dart';
+import 'package:hitungongkir/app/modules/home/models/province_model.dart';
 import 'package:hitungongkir/app/modules/home/views/widgets/kurir.dart';
+import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   RxString provAwalid = "".obs;
@@ -8,8 +15,8 @@ class HomeController extends GetxController {
   RxString provTujuanid = "".obs;
   RxString cityTujuanid = "".obs;
   RxDouble berat = 0.0.obs;
-  RxString satuan = "gram".obs;
-  RxBool hiddenButton = true.obs;
+  RxString satuan = "kg".obs;
+  // RxBool hiddenButton = true.obs;
   RxString kurir = "".obs;
 
   late TextEditingController beratC;
@@ -112,13 +119,56 @@ class HomeController extends GetxController {
     print("${berat.value}");
   }
 
-  void showButton() {
-    if (cityAwalid != 0 && cityTujuanid != 0 && berat > 0 && Kurir != "") {
-      hiddenButton.value = false;
-    } else {
-      hiddenButton.value = true;
+  // void showButton() {
+  //   if (cityAwalid != 0 && cityTujuanid != 0 && berat > 0 && Kurir != "") {
+  //     hiddenButton.value = false;
+  //   } else {
+  //     hiddenButton.value = true;
+  //   }
+  // }
+
+  void HitungOngkir() async {
+    Uri url = Uri.parse("https://api.rajaongkir.com/starter/cost");
+    try {
+      final Response = await http.post(
+        url,
+        body: {
+          "origin": cityAwalid.value,
+          "destination": cityTujuanid.value,
+          "weight": berat.value.toString(),
+          "courier": kurir.value
+          // "origin": "501",
+          // "destination": "114",
+          // "weight": "1700",
+          // "courier": "jne"
+        },
+        headers: {
+          "key": "428084606cd44a1724aaf7b2c83de401",
+          "content-type": "application/x-www-form-urlencoded",
+        },
+      );
+      print((Response != null) ? "ada data" : "tidak ada data");
+      var hasil = json.decode(Response.body) as Map<String, dynamic>;
+
+      var results = hasil['rajaongkir']['results'] as List<dynamic>;
+
+      var listAllHasilKurir = HasilOngkir.fromJsonList(results);
+      var courier = listAllHasilKurir[0];
+
+      Get.defaultDialog(
+          content: Column(
+              children: courier.costs
+                  .map((e) => ListTile(
+                        title: Text("${e.service}"),
+                        subtitle: Text(" Rp. ${e.cost[0].value}"),
+                        trailing: Text("${e.cost[0].etd} hari"),
+                      ))
+                  .toList()));
+    } catch (err) {
+      print("error bro");
     }
   }
+
   //TODO: Implement HomeController
 
   // final count = 0.obs;

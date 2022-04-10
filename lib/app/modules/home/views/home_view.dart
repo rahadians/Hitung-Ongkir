@@ -29,33 +29,37 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            controller.HitungOngkir();
+          },
         ),
         appBar: AppBar(
           title: Text('Raja Ongkir'),
           centerTitle: true,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              TextAsal(),
-              ProvinsiAwal(),
-              SizedBox(height: 10),
-              CityAwal(),
-              SizedBox(height: 15),
-              TextTujuan(),
-              ProvinsiTujuan(),
-              SizedBox(height: 10),
-              CityTujuan(),
-              SizedBox(height: 15),
-              Berat(),
-              SizedBox(height: 10),
-              Kurir(),
-              SizedBox(height: 10),
-              Konfirmasi(),
-            ],
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                TextAsal(),
+                ProvinsiAwal(),
+                SizedBox(height: 10),
+                CityAwal(),
+                SizedBox(height: 15),
+                TextTujuan(),
+                ProvinsiTujuan(),
+                SizedBox(height: 10),
+                CityTujuan(),
+                SizedBox(height: 15),
+                Berat(),
+                SizedBox(height: 10),
+                Kurir(),
+                SizedBox(height: 10),
+                Konfirmasi(),
+              ],
+            ),
           ),
         ));
   }

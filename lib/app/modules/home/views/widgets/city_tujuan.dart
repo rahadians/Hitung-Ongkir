@@ -30,7 +30,7 @@ class CityTujuan extends GetView<HomeController> {
       onFind: (dynamic filter) async {
         try {
           Uri url = Uri.parse(
-              "https://api.rajaongkir.com/starter/city?province=${controller.provAwalid}");
+              "https://api.rajaongkir.com/starter/city?province=${controller.provTujuanid}");
 
           var response = await http
               .get(url, headers: {"key": "428084606cd44a1724aaf7b2c83de401"});
@@ -82,7 +82,7 @@ class CityTujuan extends GetView<HomeController> {
 
           controller.cityTujuanid.value = "Tidak Memilih Apapun";
         } else {
-          controller.cityTujuanid.value = value.cityName!;
+          controller.cityTujuanid.value = value.cityId!;
           // print(controller.cityTujuanid.value);
         }
       },

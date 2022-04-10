@@ -82,7 +82,7 @@ class CityAwal extends GetView<HomeController> {
 
           controller.cityAwalid.value = "Tidak Memilih Apapun";
         } else {
-          controller.cityAwalid.value = value.cityName!;
+          controller.cityAwalid.value = value.cityId!;
           // print(controller.cityAwalid.value);
         }
       },
